@@ -24,12 +24,19 @@ export function calculateRealizationNumber(soulNumber: number, destinyNumber: nu
 export function calculatePersonalYear(birthDate: string, targetYear?: number): number {
 	const [, month, day] = birthDate.split('-').map(Number);
 	const currentYear = targetYear || new Date().getFullYear();
+
+	// Сумма цифр года
 	const yearSum = currentYear.toString().split('').reduce((sum, digit) => sum + parseInt(digit), 0);
 
-	return reduceToSingleDigit(day + month + yearSum);
+	// Базовое число: день + месяц (сворачиваем до одной цифры)
+	const baseNumber = reduceToSingleDigit(day + month);
+
+	// Личный год: базовое число + сумма цифр года
+	return reduceToSingleDigit(baseNumber + yearSum);
 }
 
 export function calculatePivotalYear(destinyNumber: number, personalYear: number): number {
+	// Переломный год: число миссии + личный год
 	return reduceToSingleDigit(destinyNumber + personalYear);
 }
 
